@@ -10,8 +10,12 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin: true }));
 
 app.get("/", (req, res) => {
-    return res.status(200).json({message: "Server running"})
+    return res.json({message: "Server running", code: 200})
 });
+
+const userRoutes = require("./routes/user");
+
+app.use("/user", userRoutes);
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
