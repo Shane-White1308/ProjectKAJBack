@@ -15,6 +15,7 @@ const create = async (req, res) => {
                 code: 200,
                 message: "Category added",
                 category: {
+                    _id: category._id,
                     name: category.name,
                 },
             });
