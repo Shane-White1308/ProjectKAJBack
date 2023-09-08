@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
+const crypto = require("crypto");
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -20,7 +21,8 @@ const storage = multer.diskStorage({
         );
     },
     filename: function (req, file, callback) {
-        callback(null, Date.now() + path.extname(file.originalname));
+        const id = crypto.randomBytes(5).toString("hex");
+        callback(null, `${Date.now()}_${id}${path.extname(file.originalname)}`);
     },
 });
 

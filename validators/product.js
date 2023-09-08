@@ -44,21 +44,6 @@ const createValidator = (req, res, next) => {
     next();
 };
 
-const createImageValidator = (req, res, next) => {
-    const { id } = req.body;
-
-    if (!id) {
-        return res.json({
-            status: "error",
-            code: 400,
-            error: "Product id is required",
-        });
-    }
-
-    next();
-};
-
 module.exports = {
     createValidator,
-    createImageValidator,
 };
