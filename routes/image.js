@@ -7,6 +7,6 @@ const { addProduct } = require("../controllers/image");
 
 const imageUploader = require("../middlewares/imageUploader");
 
-router.post("/product/add", imageUploader, addProductValidator, addProduct);
+router.post("/product", imageUploader, addProductValidator, addProduct);
 
 module.exports = router;

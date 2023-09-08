@@ -13,12 +13,14 @@ const {
     delete_,
 } = require("../controllers/product");
 
-router.post("/create", createValidator, create);
 router.get("/", getAll);
 router.get("/search", searchValidator, search);
 router.get("/category/:id", getByCategory);
-router.post("/update/:id", update);
-router.delete("/delete/:id", delete_);
 router.get("/:id", get);
+
+router.post("/", createValidator, create);
+router.post("/:id", update);
+
+router.delete("/:id", delete_);
 
 module.exports = router;

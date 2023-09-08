@@ -21,12 +21,17 @@ const {
 
 const { auth } = require("../middlewares/auth");
 
-router.post("/register", registerValidator, register);
-router.post("/login", loginValidator, login);
-router.post("/auth/google", authGoogleValidator, authGoogle);
-router.post("/reset/init", resetPasswordInitValidator, resetPasswordInit);
-router.post("/reset", resetPasswordValidator, resetPassword);
 router.get("/", auth, get);
 router.get("/logout", auth, logout);
+
+router.post("/auth/register", registerValidator, register);
+router.post("/auth/login", loginValidator, login);
+router.post("/auth/google", authGoogleValidator, authGoogle);
+router.post(
+    "/reset/password/init",
+    resetPasswordInitValidator,
+    resetPasswordInit
+);
+router.post("/reset/password", resetPasswordValidator, resetPassword);
 
 module.exports = router;

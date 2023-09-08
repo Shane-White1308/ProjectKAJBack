@@ -11,10 +11,12 @@ const {
     delete_,
 } = require("../controllers/category");
 
-router.post("/create", createValidator, create);
 router.get("/", getAll);
-router.post("/update/:id", updateValidator, update);
-router.delete("/delete/:id", delete_);
 router.get("/:id", get);
+
+router.post("/", createValidator, create);
+router.post("/:id", updateValidator, update);
+
+router.delete("/:id", delete_);
 
 module.exports = router;
