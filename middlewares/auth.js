@@ -2,7 +2,7 @@ const { verify } = require("jsonwebtoken");
 const User = require("../models/user");
 
 const auth = async (req, res, next) => {
-    const token = req.cookies.JWT_TOKEN || req.body.JWT_TOKEN;
+    const token = req.cookies.JWT_TOKEN || req.headers.authorization;
 
     if (token) {
         try {
@@ -35,7 +35,6 @@ const auth = async (req, res, next) => {
     }
 };
 
-
 module.exports = {
-    auth
+    auth,
 };
