@@ -7,10 +7,10 @@ const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const register = async (req, res) => {
-    const {firstName, lastName, email, password: plainPassword} = req.body;
+    const { firstName, lastName, email, password: plainPassword } = req.body;
 
     try {
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
 
         if (!user) {
             const password = await bcrypt.hash(plainPassword, 7);
@@ -19,7 +19,7 @@ const register = async (req, res) => {
                 firstName,
                 lastName,
                 email,
-                password
+                password,
             });
 
             const token = generateToken(user._id);
@@ -35,12 +35,7 @@ const register = async (req, res) => {
                 status: "ok",
                 code: 200,
                 message: "Account created",
-                user: {
-                    id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email
-                },
+                user,
                 token,
             });
         } else {
@@ -57,8 +52,7 @@ const register = async (req, res) => {
             error: "Some error occurred",
         });
     }
-}
-
+};
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -80,12 +74,7 @@ const login = async (req, res) => {
                 status: "ok",
                 code: 200,
                 message: "Login successful",
-                user: {
-                    id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email
-                },
+                user,
                 token,
             });
         } else {
@@ -140,12 +129,7 @@ const authGoogle = async (req, res) => {
                     status: "ok",
                     code: 200,
                     message: "Account created",
-                    user: {
-                        id: user._id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email
-                    },
+                    user,
                     token,
                 });
             } else {
@@ -162,12 +146,7 @@ const authGoogle = async (req, res) => {
                     status: "ok",
                     code: 200,
                     message: "Login successful",
-                    user: {
-                        id: user._id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email
-                    },
+                    user,
                     token,
                 });
             }
@@ -194,7 +173,7 @@ const resetPasswordInit = async (req, res) => {
             const otpExpire = new Date(new Date().getTime() + 30 * 60 * 1000);
 
             if (await mailOtp(email, otp)) {
-                await user.updateOne({otp, otpExpire})
+                await user.updateOne({ otp, otpExpire });
 
                 return res.json({
                     status: "ok",
@@ -237,7 +216,7 @@ const resetPassword = async (req, res) => {
 
                     await user.updateOne({
                         password,
-                        otpExpire: new Date()
+                        otpExpire: new Date(),
                     });
 
                     return res.json({
@@ -292,6 +271,7 @@ const logout = async (req, res) => {
 
 const get = async (req, res) => {
     const { user } = req.body;
+
     try {
         if (user) {
             return res.json({
@@ -302,7 +282,7 @@ const get = async (req, res) => {
                     id: user._id,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    email: user.email
+                    email: user.email,
                 },
             });
         } else {
@@ -321,8 +301,6 @@ const get = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     register,
     login,
@@ -330,5 +308,5 @@ module.exports = {
     resetPasswordInit,
     resetPassword,
     get,
-    logout
+    logout,
 };

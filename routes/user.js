@@ -6,7 +6,7 @@ const {
     loginValidator,
     authGoogleValidator,
     resetPasswordInitValidator,
-    resetPasswordValidator
+    resetPasswordValidator,
 } = require("../validators/user");
 
 const {
@@ -16,17 +16,17 @@ const {
     resetPasswordInit,
     resetPassword,
     get,
-    logout
+    logout,
 } = require("../controllers/user");
 
-const {auth} = require("../middlewares/auth");
+const { auth } = require("../middlewares/auth");
 
 router.post("/register", registerValidator, register);
 router.post("/login", loginValidator, login);
 router.post("/auth/google", authGoogleValidator, authGoogle);
 router.post("/reset/init", resetPasswordInitValidator, resetPasswordInit);
 router.post("/reset", resetPasswordValidator, resetPassword);
-router.post("/", auth, get);
-router.post("/logout", auth, logout);
+router.get("/", auth, get);
+router.get("/logout", auth, logout);
 
 module.exports = router;
