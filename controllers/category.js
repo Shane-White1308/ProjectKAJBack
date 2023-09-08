@@ -1,7 +1,7 @@
 const Category = require("../models/category");
 
 const create = async (req, res) => {
-    const { name } = req.body;
+    let { name } = req.body;
     name = name.toLowerCase();
 
     try {
@@ -14,16 +14,42 @@ const create = async (req, res) => {
                 status: "ok",
                 code: 200,
                 message: "Category added",
-                category: {
-                    _id: category._id,
-                    name: category.name,
-                },
+                category,
             });
         } else {
             return res.json({
                 status: "error",
                 code: 409,
                 error: "Category already exists",
+            });
+        }
+    } catch (error) {
+        return res.json({
+            status: "error",
+            code: 500,
+            error: "Some error occurred",
+        });
+    }
+};
+
+const get = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const category = await Category.findById(id);
+
+        if (category) {
+            return res.json({
+                status: "ok",
+                code: 200,
+                message: "Category fetched",
+                category,
+            });
+        } else {
+            return res.json({
+                status: "error",
+                code: 404,
+                error: "Category not found",
             });
         }
     } catch (error) {
@@ -55,7 +81,7 @@ const getAll = async (req, res) => {
 };
 
 const update = async (req, res) => {
-    const { id, name } = req.body;
+    let { id, name } = req.body;
     name = name.toLowerCase();
 
     try {
@@ -91,13 +117,13 @@ const update = async (req, res) => {
 };
 
 const delete_ = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
         const category = await Category.findById(id);
 
         if (category) {
-            await category.remove();
+            await Category.deleteOne({ _id: id });
 
             return res.json({
                 status: "ok",
@@ -122,6 +148,7 @@ const delete_ = async (req, res) => {
 
 module.exports = {
     create,
+    get,
     getAll,
     update,
     delete_,

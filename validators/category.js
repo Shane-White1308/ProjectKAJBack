@@ -34,22 +34,7 @@ const updateValidator = (req, res, next) => {
     next();
 };
 
-const deleteValidator = (req, res, next) => {
-    const { id } = req.body;
-
-    if (!id) {
-        return res.json({
-            status: "error",
-            code: 400,
-            error: "Category id is required",
-        });
-    }
-
-    next();
-};
-
 module.exports = {
     createValidator,
     updateValidator,
-    deleteValidator,
 };
