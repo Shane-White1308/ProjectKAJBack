@@ -13,8 +13,8 @@ const {
 
 router.post("/create", createValidator, create);
 router.get("/", getAll);
-router.get("/:id", get);
-router.post("/update", updateValidator, update);
+router.post("/update/:id", updateValidator, update);
 router.delete("/delete/:id", delete_);
+router.get("/:id", get);
 
 module.exports = router;

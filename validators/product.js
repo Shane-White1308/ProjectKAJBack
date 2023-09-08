@@ -44,6 +44,21 @@ const createValidator = (req, res, next) => {
     next();
 };
 
+const searchValidator = (req, res, next) => {
+    const { query } = req.query;
+
+    if (!query || typeof query !== "string") {
+        return res.json({
+            status: "error",
+            code: 400,
+            error: "Query is required",
+        });
+    }
+
+    next();
+};
+
 module.exports = {
     createValidator,
+    searchValidator,
 };

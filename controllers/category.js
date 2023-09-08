@@ -81,7 +81,8 @@ const getAll = async (req, res) => {
 };
 
 const update = async (req, res) => {
-    let { id, name } = req.body;
+    const { id } = req.params;
+    let { name } = req.body;
     name = name.toLowerCase();
 
     try {

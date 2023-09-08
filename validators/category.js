@@ -13,15 +13,7 @@ const createValidator = (req, res, next) => {
 };
 
 const updateValidator = (req, res, next) => {
-    const { id, name } = req.body;
-
-    if (!id) {
-        return res.json({
-            status: "error",
-            code: 400,
-            error: "Category id is required",
-        });
-    }
+    const { name } = req.body;
 
     if (!name || typeof name !== "string") {
         return res.json({
