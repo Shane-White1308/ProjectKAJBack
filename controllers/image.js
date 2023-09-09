@@ -2,7 +2,6 @@ const Product = require("../models/product");
 const Image = require("../models/image");
 var fs = require("fs");
 const path = require("path");
-const { constants } = require("perf_hooks");
 
 const addProduct = async (req, res) => {
     const { id, isCover, isModel } = req.body;
@@ -101,7 +100,87 @@ const getProduct = async (req, res) => {
     }
 };
 
+const get = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const image = await Image.findById(id);
+        const fileDirUrl = req.protocol + "://" + req.get("host");
+
+        if (image) {
+            return res.json({
+                status: "ok",
+                code: 200,
+                message: "Image fetched",
+                image: {
+                    ...image._doc,
+                    url:
+                        fileDirUrl +
+                        process.env.IMAGE_STORAGE_PATH +
+                        "/" +
+                        image.filename,
+                },
+            });
+        } else {
+            return res.json({
+                status: "error",
+                code: 404,
+                error: "Image not found",
+            });
+        }
+    } catch (error) {
+        return res.json({
+            status: "error",
+            code: 500,
+            error: "Some error occurred",
+        });
+    }
+};
+
+const delete_ = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const image = await Image.findById(id);
+
+        if (image) {
+            const imagePath = path.join(
+                __dirname,
+                "..",
+                process.env.IMAGE_STORAGE_PATH,
+                image.filename
+            );
+
+            if (fs.existsSync(imagePath)) {
+                fs.unlink(imagePath, () => {});
+            }
+
+            await Image.deleteOne({ _id: image._id });
+
+            return res.json({
+                status: "ok",
+                code: 200,
+                message: "Image removed",
+            });
+        } else {
+            return res.json({
+                status: "error",
+                code: 404,
+                error: "Image not found",
+            });
+        }
+    } catch (error) {
+        return res.json({
+            status: "error",
+            code: 500,
+            error: "Some error occurred",
+        });
+    }
+};
+
 module.exports = {
     addProduct,
     getProduct,
+    get,
+    delete_,
 };
