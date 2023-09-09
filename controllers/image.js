@@ -18,14 +18,19 @@ const addProduct = async (req, res) => {
                 isModel: !!isModel,
             });
 
+            const fileDirUrl = req.protocol + "://" + req.get("host");
+
             return res.json({
                 status: "ok",
                 code: 200,
                 message: "Image uploaded",
                 image: {
-                    _id: image._id,
-                    isCover: image.isCover,
-                    isModel: image.isModel,
+                    ...image._doc,
+                    url:
+                        fileDirUrl +
+                        process.env.IMAGE_STORAGE_PATH +
+                        "/" +
+                        image.filename,
                 },
             });
         } else {
