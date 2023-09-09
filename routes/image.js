@@ -3,10 +3,11 @@ const router = express.Router();
 
 const { addProductValidator } = require("../validators/image");
 
-const { addProduct } = require("../controllers/image");
+const { addProduct, getProduct } = require("../controllers/image");
 
 const imageUploader = require("../middlewares/imageUploader");
 
 router.post("/product", imageUploader, addProductValidator, addProduct);
+router.get("/product/:id", getProduct);
 
 module.exports = router;

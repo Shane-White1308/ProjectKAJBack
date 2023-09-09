@@ -3,6 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(cors({ credentials: true, origin: true }));
 app.get("/", (req, res) => {
     return res.json({ status: "ok", code: 200, message: "Server running" });
 });
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
