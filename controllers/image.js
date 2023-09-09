@@ -13,7 +13,7 @@ const addProduct = async (req, res) => {
         if (product) {
             const image = await Image.create({
                 filename,
-                ref: "product" + product.id,
+                ref: "product" + product._id,
                 isCover: !!isCover,
                 isModel: !!isModel,
             });
@@ -23,7 +23,7 @@ const addProduct = async (req, res) => {
                 code: 200,
                 message: "Image uploaded",
                 image: {
-                    _id: image.id,
+                    _id: image._id,
                     isCover: image.isCover,
                     isModel: image.isModel,
                 },

@@ -118,7 +118,7 @@ const getByCategory = async (req, res) => {
 
         if (category) {
             const products = await Product.find({
-                category: category.id,
+                category: category._id,
             });
 
             return res.json({
@@ -172,7 +172,7 @@ const update = async (req, res) => {
                 return res.json({
                     status: "ok",
                     code: 200,
-                    message: "Product updates successfully",
+                    message: "Product updated successfully",
                     product: {
                         name,
                         price,

@@ -20,11 +20,13 @@ const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
 const productRoutes = require("./routes/product");
 const imageRoutes = require("./routes/image");
+const featureRoutes = require("./routes/feature");
 
 app.use("/user", userRoutes);
 app.use("/category", categoryRoutes);
 app.use("/product", productRoutes);
 app.use("/image", imageRoutes);
+app.use("/feature", featureRoutes);
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
