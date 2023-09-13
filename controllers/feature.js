@@ -45,7 +45,7 @@ const getProduct = async (req, res) => {
         return res.json({
             status: "ok",
             code: 200,
-            message: "Images fetched",
+            message: "Features fetched",
             features,
         });
     } catch (error) {
