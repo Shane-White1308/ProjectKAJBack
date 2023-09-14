@@ -22,6 +22,7 @@ const productRoutes = require("./routes/product");
 const imageRoutes = require("./routes/image");
 const featureRoutes = require("./routes/feature");
 const reviewRoutes = require("./routes/review");
+const cartRoutes = require("./routes/cart");
 
 app.use("/user", userRoutes);
 app.use("/category", categoryRoutes);
@@ -29,6 +30,7 @@ app.use("/product", productRoutes);
 app.use("/image", imageRoutes);
 app.use("/feature", featureRoutes);
 app.use("/review", reviewRoutes);
+app.use("/cart", cartRoutes);
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
