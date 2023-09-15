@@ -61,6 +61,35 @@ const get = async (req, res) => {
     }
 };
 
+const getByName = async (req, res) => {
+    const { name } = req.params;
+
+    try {
+        const category = await Category.findOne({ name: name.toLowerCase() });
+
+        if (category) {
+            return res.json({
+                status: "ok",
+                code: 200,
+                message: "Category fetched",
+                category,
+            });
+        } else {
+            return res.json({
+                status: "error",
+                code: 404,
+                error: "Category not found",
+            });
+        }
+    } catch (error) {
+        return res.json({
+            status: "error",
+            code: 500,
+            error: "Some error occurred",
+        });
+    }
+};
+
 const getAll = async (req, res) => {
     try {
         const categories = await Category.find();
@@ -151,6 +180,7 @@ module.exports = {
     create,
     get,
     getAll,
+    getByName,
     update,
     delete_,
 };

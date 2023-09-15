@@ -1,5 +1,5 @@
 const createValidator = (req, res, next) => {
-    const { name, price, size, summary, description } = req.body;
+    const { name, price, size, quantity, summary, description } = req.body;
 
     if (!name || typeof name !== "string") {
         return res.json({
@@ -22,6 +22,14 @@ const createValidator = (req, res, next) => {
             status: "error",
             code: 400,
             error: "Size is required",
+        });
+    }
+
+    if (!quantity) {
+        return res.json({
+            status: "error",
+            code: 400,
+            error: "Quantity is required",
         });
     }
 

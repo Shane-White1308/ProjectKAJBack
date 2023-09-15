@@ -283,7 +283,37 @@ const get = async (req, res) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
+                    mobile: user.mobile,
                 },
+            });
+        } else {
+            return res.json({
+                status: "error",
+                code: 404,
+                error: "User not found",
+            });
+        }
+    } catch (error) {
+        return res.json({
+            status: "error",
+            code: 500,
+            error: "Some error occurred",
+        });
+    }
+};
+
+const getOther = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await User.findById(id, "firstName lastName");
+
+        if (user) {
+            return res.json({
+                status: "ok",
+                code: 200,
+                message: "Details fetched",
+                user,
             });
         } else {
             return res.json({
@@ -308,5 +338,6 @@ module.exports = {
     resetPasswordInit,
     resetPassword,
     get,
+    getOther,
     logout,
 };

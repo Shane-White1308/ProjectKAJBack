@@ -16,12 +16,14 @@ const {
     resetPasswordInit,
     resetPassword,
     get,
+    getOther,
     logout,
 } = require("../controllers/user");
 
 const { auth } = require("../middlewares/auth");
 
 router.get("/", auth, get);
+router.get("/:id", getOther);
 router.get("/logout", auth, logout);
 
 router.post("/auth/register", registerValidator, register);

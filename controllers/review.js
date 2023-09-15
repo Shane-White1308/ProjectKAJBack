@@ -142,6 +142,7 @@ const summary = async (req, res) => {
             const result = {
                 totalStars: 0,
                 totalReviews: 0,
+                avgRating: 0,
             };
 
             review.forEach((rev) => {
@@ -150,7 +151,9 @@ const summary = async (req, res) => {
                 result.totalReviews += rev.count;
             });
 
-            result.avgRating = result.totalStars / result.totalReviews;
+            if (result.totalReviews) {
+                result.avgRating = result.totalStars / result.totalReviews;
+            }
 
             return res.json({
                 status: "ok",

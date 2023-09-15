@@ -7,12 +7,14 @@ const {
     create,
     getAll,
     get,
+    getByName,
     update,
     delete_,
 } = require("../controllers/category");
 
 router.get("/", getAll);
-router.get("/:id", get);
+router.get("/name/:name", getByName);
+router.get("/id/:id", get);
 
 router.post("/", createValidator, create);
 router.post("/:id", updateValidator, update);

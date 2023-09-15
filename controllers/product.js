@@ -2,8 +2,16 @@ const Product = require("../models/product");
 const Category = require("../models/category");
 
 const create = async (req, res) => {
-    const { name, price, offer, size, summary, description, category } =
-        req.body;
+    const {
+        name,
+        price,
+        offer,
+        size,
+        quantity,
+        summary,
+        description,
+        category,
+    } = req.body;
 
     try {
         if (category && !(await Category.findById(category))) {
@@ -18,6 +26,7 @@ const create = async (req, res) => {
                 price,
                 offer,
                 size,
+                quantity,
                 summary,
                 description,
                 category,
@@ -169,8 +178,16 @@ const getTop = async (req, res) => {
 
 const update = async (req, res) => {
     const { id } = req.params;
-    const { name, price, offer, size, summary, description, category } =
-        req.body;
+    const {
+        name,
+        price,
+        offer,
+        size,
+        quantity,
+        summary,
+        description,
+        category,
+    } = req.body;
 
     try {
         const product = await Product.findById(id);
@@ -188,6 +205,7 @@ const update = async (req, res) => {
                     price,
                     offer,
                     size,
+                    quantity,
                     summary,
                     description,
                     category,
@@ -202,6 +220,7 @@ const update = async (req, res) => {
                         price,
                         offer,
                         size,
+                        quantity,
                         summary,
                         description,
                         category,
