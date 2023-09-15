@@ -143,6 +143,30 @@ const getByCategory = async (req, res) => {
     }
 };
 
+const getTop = async (req, res) => {
+    let { count } = req.query;
+    count = count || 10;
+
+    try {
+        const products = await Product.find()
+            .sort({ unitsSold: -1 })
+            .limit(count);
+
+        return res.json({
+            status: "ok",
+            code: 200,
+            message: "Products fetched",
+            products,
+        });
+    } catch (error) {
+        return res.json({
+            status: "error",
+            code: 500,
+            error: "Some error occurred",
+        });
+    }
+};
+
 const update = async (req, res) => {
     const { id } = req.params;
     const { name, price, offer, size, summary, description, category } =
@@ -236,6 +260,7 @@ module.exports = {
     getAll,
     search,
     getByCategory,
+    getTop,
     update,
     delete_,
 };

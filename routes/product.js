@@ -9,12 +9,14 @@ const {
     getAll,
     search,
     getByCategory,
+    getTop,
     update,
     delete_,
 } = require("../controllers/product");
 
 router.get("/", getAll);
 router.get("/search", searchValidator, search);
+router.get("/top", getTop);
 router.get("/category/:id", getByCategory);
 router.get("/:id", get);
 
